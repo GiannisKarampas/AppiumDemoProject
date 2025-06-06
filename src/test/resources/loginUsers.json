@@ -1,0 +1,14 @@
+{
+  "invalidUser": {
+    "username": "invalidusername",
+    "password": "TestAccount123"
+  },
+  "invalidPassword": {
+    "username": "g.karampas91@gmail.com",
+    "password": "invalidpassword"
+  },
+  "validUser": {
+    "username": "g.karampas91@gmail.com",
+    "password": "TestAccount123"
+  }
+}

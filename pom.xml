@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>AppiumTrackmanKarampatzakis</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <appium.version>9.4.0</appium.version>
+        <testng.version>7.11.0</testng.version>
+        <jackson.version>2.19.0</jackson.version>
+
+        <selenium.version>4.33.0</selenium.version>
+        <android.platformName>Android</android.platformName>
+        <android.platformVersion>14.0</android.platformVersion>
+        <android.deviceName>Android Emulator</android.deviceName>
+        <android.automationName>UiAutomator2</android.automationName>
+        <android.appPackage>dk.TrackMan.Range</android.appPackage>
+        <android.appActivity>crc64268e1ed28150a02c.MainActivity</android.appActivity>
+        <android.app>/path/to/apk/TrackManRange.apk</android.app>
+        <android.noReset>true</android.noReset>
+        <android.fullReset>false</android.fullReset>
+        <ios.platformName>iOS</ios.platformName>
+        <ios.platformVersion>17.0</ios.platformVersion>
+        <ios.deviceName>iPhone 15 Pro Max</ios.deviceName>
+        <ios.automationName>XCUITest</ios.automationName>
+        <ios.bundleId>com.trackman.range</ios.bundleId>
+        <ios.app>/path/to/TrackManRange.app</ios.app>
+        <ios.noReset>true</ios.noReset>
+        <ios.fullReset>false</ios.fullReset>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>io.appium</groupId>
+            <artifactId>java-client</artifactId>
+            <version>${appium.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+    </dependencies>
+
+    <profiles>
+        <profile>
+            <id>android</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <platform>Android</platform>
+                <platformName>${android.platformName}</platformName>
+                <platformVersion>${android.platformVersion}</platformVersion>
+                <deviceName>${android.deviceName}</deviceName>
+                <automationName>${android.automationName}</automationName>
+                <appPackage>${android.appPackage}</appPackage>
+                <appActivity>${android.appActivity}</appActivity>
+                <app>${android.app}</app>
+                <noReset>${android.noReset}</noReset>
+                <fullReset>${android.fullReset}</fullReset>
+            </properties>
+        </profile>
+        <profile>
+            <id>ios</id>
+            <properties>
+                <platform>iOS</platform>
+                <platformName>${ios.platformName}</platformName>
+                <platformVersion>${ios.platformVersion}</platformVersion>
+                <deviceName>${ios.deviceName}</deviceName>
+                <automationName>${ios.automationName}</automationName>
+                <bundleId>${ios.bundleId}</bundleId>
+                <app>${ios.app}</app>
+                <noReset>${ios.noReset}</noReset>
+                <fullReset>${ios.fullReset}</fullReset>
+            </properties>
+        </profile>
+    </profiles>
+
+</project>
