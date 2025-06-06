@@ -34,11 +34,10 @@ public class LoginPage extends BasePage {
 
     public void login(String username, String password) {
         profilePage.navigateToProfilePage();
-        wait.until(ExpectedConditions.visibilityOf(firstSignInButton)).click();
-        wait.until(ExpectedConditions.elementToBeClickable(usernameField))
-                .sendKeys(username);
-        passwordField.sendKeys(password);
-        wait.until(ExpectedConditions.visibilityOf(signIn)).click();
+        safeClick(firstSignInButton, 5);
+        safeSendKeys(usernameField, username, 5);
+        safeSendKeys(passwordField, password, 5);
+        safeClick(signIn, 5);
     }
 
     public void getErrorMessage() {

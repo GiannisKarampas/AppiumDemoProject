@@ -5,21 +5,19 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.base.BasePage;
 import org.testng.Assert;
 import org.testng.SkipException;
 
-import java.time.Duration;
 import java.util.List;
+import java.util.UUID;
 
 public class PlannedRoundPage extends BasePage {
 
     @AndroidFindBy(id = "dk.TrackMan.Range:id/addRoundButton")
     private WebElement newPlannedRoundButton;
 
-    @AndroidFindBy(uiAutomator = "new UiSelector().className(\"android.view.ViewGroup\").instance(1)")
+    @AndroidFindBy(id = "dk.TrackMan.Range:id/actionButton")
     private WebElement plannedRoundIntroDrawer;
 
     @AndroidFindBy(id = "dk.TrackMan.Range:id/actionButton")
@@ -64,9 +62,13 @@ public class PlannedRoundPage extends BasePage {
     @AndroidFindBy(id = "dk.TrackMan.Range:id/deleteRoundTextView")
     private WebElement deleteButton;
 
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@resource-id=\"dk.TrackMan.Range:id/plannedRoundOverviewView\"])[1]//android.widget.TextView[@resource-id=\"dk.TrackMan.Range:id/roundNameTextView\"]")
+    private WebElement firstCreateRoundName;
+
     // Use a By locator for dynamic finds/counts
     private static final By plannedRounds = By.id("dk.TrackMan.Range:id/plannedRoundOverviewView");
 
+    private String generatedRoundName = generateRandomRoundName();
 
     public PlannedRoundPage(AppiumDriver driver) {
         super(driver);
@@ -74,61 +76,73 @@ public class PlannedRoundPage extends BasePage {
 
     public void createPlannedRound() {
 
-        if (plannedRoundIntroDrawer.isDisplayed()) {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
-                    .until(ExpectedConditions.elementToBeClickable(planVirtualRoundDrawerButton))
-                    .click();
+        if (isElementDisplayed(plannedRoundIntroDrawer, 5)) {
+            safeClick(planVirtualRoundDrawerButton, 5);
         } else {
-            new WebDriverWait(driver, Duration.ofSeconds(3))
-                    .until(ExpectedConditions.elementToBeClickable(newPlannedRoundButton))
-                    .click();
+            safeClick(newPlannedRoundButton, 5);
         }
 
         Assert.assertTrue(courses.isDisplayed());
-        firstCourse.click();
-        planGolfRound.click();
+        safeClick(firstCourse, 3);
+        safeClick(planGolfRound, 5);
+        safeSendKeys(roundName, generatedRoundName, 3);
+
         String roundNameText = roundName.getText();
+        System.out.println(roundNameText);
         String courseNameText = courseName.getText();
-        saveButton.click();
+
+        safeClick(saveButton, 2);
+
         String savedCourseNameText = courseName.getText();
         String savedRoundNameText = savedRoundName.getText();
 
-        Assert.assertEquals(roundNameText, savedRoundNameText);
-        Assert.assertEquals(courseNameText, savedCourseNameText);
+        Assert.assertEquals(roundNameText, savedRoundNameText, String.format("Expected saved round name '%s', but found '%s'.", roundNameText, savedRoundNameText));
+        Assert.assertEquals(courseNameText, savedCourseNameText, String.format("Expected saved course name '%s', but found '%s'.", courseNameText, savedCourseNameText));
+
         backButton.click();
     }
 
     public void confirmCourseIsCreated() {
-        Assert.assertTrue(createdPlannedRoundCourses.isDisplayed());
+        WebElement createdRounds = waitForElement(createdPlannedRoundCourses, 10);
+        System.out.println(firstCreateRoundName.getText());
+        Assert.assertEquals(firstCreateRoundName.getText(), generatedRoundName);
+        Assert.assertTrue(createdRounds.isDisplayed(), "Created planned round courses are not displayed.");
     }
 
     public void deleteRoundCourse() {
-        if (plannedRoundIntroDrawer.isDisplayed()) {
-            closePlanGolfDrawer.click();
+        if (isElementDisplayed(planVirtualRoundDrawerButton, 5)) {
+            safeClick(closePlanGolfDrawer, 5);
         }
 
         int beforeCount = getPlannedRoundCount();
+
         if (beforeCount == 0)
             throw new SkipException("No planned round items to delete. Skip the test!");
 
-        createdPlannedRound.click();
-        moreButton.click();
-        deleteButton.click();
+        safeClick(createdPlannedRound, 5);
+        safeClick(moreButton, 5);
+        safeClick(deleteButton, 5);
         driver.findElement(AppiumBy.id("android:id/button1")).click();
-
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(driver -> getPlannedRoundCount() == beforeCount - 1);
-
-        int afterCount = getPlannedRoundCount();
-        Assert.assertEquals(afterCount, beforeCount - 1,
-                "After deleting one planned round, expected count to decrease by one.");
+        Assert.assertNotEquals(firstCreateRoundName.getText(), generatedRoundName);
     }
 
     private int getPlannedRoundCount() {
-        new WebDriverWait(driver, Duration.ofSeconds(10))
-                .until(ExpectedConditions.visibilityOfElementLocated(plannedRounds));
+        try {
+            WebElement plannedRoundsContainer = waitForElement(plannedRounds, 5);
+            if (plannedRoundsContainer == null) {
+                throw new RuntimeException("Planned rounds container not found.");
+            }
 
-        List<WebElement> items = driver.findElements(plannedRounds);
-        return items.size();
+            List<WebElement> items = driver.findElements(plannedRounds);
+            return items.size();
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Failed to get planned round count: " + e.getMessage(), e);
+        }
+    }
+
+    private String generateRandomRoundName() {
+        return "Test round " + UUID.randomUUID()
+                .toString()
+                .substring(0,8);
     }
 }

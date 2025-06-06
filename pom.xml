@@ -15,8 +15,8 @@
         <appium.version>9.4.0</appium.version>
         <testng.version>7.11.0</testng.version>
         <jackson.version>2.19.0</jackson.version>
-
         <selenium.version>4.33.0</selenium.version>
+
         <android.platformName>Android</android.platformName>
         <android.platformVersion>14.0</android.platformVersion>
         <android.deviceName>Android Emulator</android.deviceName>
