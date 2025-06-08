@@ -6,6 +6,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.base.BasePage;
+import org.testng.Assert;
 
 import java.time.Duration;
 
@@ -34,14 +35,14 @@ public class LoginPage extends BasePage {
 
     public void login(String username, String password) {
         profilePage.navigateToProfilePage();
-        safeClick(firstSignInButton, 5);
-        safeSendKeys(usernameField, username, 5);
-        safeSendKeys(passwordField, password, 5);
+        safeClick(firstSignInButton, 10);
+        safeSendKeys(usernameField, username, 60);
+        safeSendKeys(passwordField, password, 10);
         safeClick(signIn, 5);
     }
 
     public void getErrorMessage() {
         String error = wait.until(ExpectedConditions.visibilityOf(errorMessage)).getText();
-        System.out.println(error);
+        Assert.assertEquals(error, "The email or password is incorrect");
     }
 }

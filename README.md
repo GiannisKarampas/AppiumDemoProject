@@ -11,32 +11,14 @@ TrackmanKarampatzakis/
 │   │   └── java/
 │   │       └── org/
 │   │          ├── config/
-│   │          │   ├── ConfigManager.java
-│   │          │   └── DriverCapabilities.java
 │   │          ├── driver/
-│   │          │   ├── DriverManager.java
-│   │          │   ├── DriverFactory.java
-│   │          │   └── MobileDriverType.java
 │   │          ├── pages/
 │   │          │   ├── base/
-│   │          │   │   ├── BasePage.java
-│   │          │   │   └── PageFactory.java
-│   │          │   ├── android/
-│   │          │   │   ├── LoginPage.java
-│   │          │   │   ├── HomePage.java
-│   │          │   │   └── ProfilePage.java
-│   │          │   │   └── PlannedRoundPage.java
 │   │          ├── utils/
-│   │          │   ├── ConfigReader.java
 │   ├── test/
 │   │   ├── java/
 │   │   ├── base/
-│   │   │   └── BaseTest.java
-│   │   ├── infrastructure/
-│   │   │   └── PageObjectFactory.java
 │   │   ├── tests/
-│   │   │    ├── PlannedRounds.java
-│   │   │    ├── HomeTests.java
 │   │   └── resources/
 ├── pom.xml
 └── README.md

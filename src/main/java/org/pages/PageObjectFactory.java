@@ -1,12 +1,8 @@
-package infrastructure;
+package org.pages;
 
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AppiumFieldDecorator;
 import org.openqa.selenium.support.PageFactory;
-import org.pages.HomePage;
-import org.pages.LoginPage;
-import org.pages.PlannedRoundPage;
-import org.pages.ProfilePage;
 
 public class PageObjectFactory {
 
@@ -32,5 +28,17 @@ public class PageObjectFactory {
         ProfilePage profilePage = new ProfilePage(driver);
         PageFactory.initElements(new AppiumFieldDecorator(driver), profilePage);
         return profilePage;
+    }
+
+    public static CalendarPage getCalendarPage(AppiumDriver driver) {
+        CalendarPage calendarPage = new CalendarPage(driver);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), calendarPage);
+        return calendarPage;
+    }
+
+    public static MyBagPage getMyBagPage(AppiumDriver driver) {
+        MyBagPage myBagPage = new MyBagPage(driver);
+        PageFactory.initElements(new AppiumFieldDecorator(driver), myBagPage);
+        return myBagPage;
     }
 }

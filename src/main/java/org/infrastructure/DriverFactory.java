@@ -8,6 +8,7 @@ import io.appium.java_client.ios.options.XCUITestOptions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.utils.ConfigReader;
 
+import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -33,6 +34,7 @@ public class DriverFactory {
                 throw new RuntimeException(e);
             }
         } else if (platform.equalsIgnoreCase("Android")) {
+            File appFile = new File(System.getProperty("user.dir"), ConfigReader.getProperty("android.app"));
             UiAutomator2Options options = new UiAutomator2Options()
                     .setPlatformName(ConfigReader.getProperty("android.platformName"))
                     .setPlatformVersion(ConfigReader.getProperty("android.platformVersion"))
@@ -40,7 +42,7 @@ public class DriverFactory {
                     .setAutomationName(ConfigReader.getProperty("android.automationName"))
                     .setAppPackage(ConfigReader.getProperty("android.appPackage"))
                     .setAppActivity(ConfigReader.getProperty("android.appActivity"))
-                    .setApp(ConfigReader.getProperty("android.app"))
+                    .setApp(appFile.getPath())
                     .autoGrantPermissions();
 
             try {

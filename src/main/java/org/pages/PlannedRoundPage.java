@@ -62,7 +62,7 @@ public class PlannedRoundPage extends BasePage {
     @AndroidFindBy(id = "dk.TrackMan.Range:id/deleteRoundTextView")
     private WebElement deleteButton;
 
-    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@resource-id=\"dk.TrackMan.Range:id/plannedRoundOverviewView\"])[1]//android.widget.TextView[@resource-id=\"dk.TrackMan.Range:id/roundNameTextView\"]")
+    @AndroidFindBy(xpath = "(//android.view.ViewGroup[@resource-id='dk.TrackMan.Range:id/plannedRoundOverviewView'])[1]//android.widget.TextView[@resource-id='dk.TrackMan.Range:id/roundNameTextView']")
     private WebElement firstCreateRoundName;
 
     // Use a By locator for dynamic finds/counts
@@ -123,7 +123,12 @@ public class PlannedRoundPage extends BasePage {
         safeClick(moreButton, 5);
         safeClick(deleteButton, 5);
         driver.findElement(AppiumBy.id("android:id/button1")).click();
-        Assert.assertNotEquals(firstCreateRoundName.getText(), generatedRoundName);
+
+        if (isElementDisplayed(firstCreateRoundName, 5)) {
+            Assert.assertNotEquals(firstCreateRoundName.getText(), generatedRoundName);
+        } else {
+            Assert.assertTrue(driver.findElement(AppiumBy.id("dk.TrackMan.Range:id/feedbackStateView")).isDisplayed());
+        }
     }
 
     private int getPlannedRoundCount() {

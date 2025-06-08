@@ -19,7 +19,7 @@ public abstract class BasePage {
     public BasePage(AppiumDriver driver) {
         this.driver = driver;
         PageFactory.initElements(new AppiumFieldDecorator(driver), this);
-        wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
     }
 
     public boolean isElementDisplayed(WebElement element, int timeoutInSeconds) {

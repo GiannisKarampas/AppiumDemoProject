@@ -16,6 +16,8 @@
         <testng.version>7.11.0</testng.version>
         <jackson.version>2.19.0</jackson.version>
         <selenium.version>4.33.0</selenium.version>
+        <lombok.version>1.18.38</lombok.version>
+        <datafaker.version>2.4.3</datafaker.version>
 
         <android.platformName>Android</android.platformName>
         <android.platformVersion>14.0</android.platformVersion>
@@ -60,6 +62,12 @@
             <artifactId>jackson-databind</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>net.datafaker</groupId>
+            <artifactId>datafaker</artifactId>
+            <version>${datafaker.version}</version>
+        </dependency>
     </dependencies>
 
     <profiles>
@@ -96,5 +104,4 @@
             </properties>
         </profile>
     </profiles>
-
 </project>

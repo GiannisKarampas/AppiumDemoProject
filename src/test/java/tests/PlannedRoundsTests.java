@@ -2,7 +2,7 @@ package tests;
 
 import base.BaseTest;
 import org.testng.annotations.*;
-import org.utils.CredentialsLoader;
+import org.utils.JsonLoader;
 import org.utils.UserCredentials;
 
 import java.io.IOException;
@@ -14,7 +14,7 @@ public class PlannedRoundsTests extends BaseTest {
 
     @BeforeClass(alwaysRun = true)
     public void loadUserAndLogin() throws IOException {
-        users = CredentialsLoader.load("src/test/resources/loginUsers.json");
+        users = JsonLoader.load("src/test/resources/loginUsers.json",String.class, UserCredentials.class);
         validUser = users.get("validUser");
         loginPage.login(validUser.getUsername(), validUser.getPassword());
     }
