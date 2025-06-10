@@ -41,8 +41,7 @@ TrackmanKarampatzakis/
 You can select the platform (**Android** or **iOS**) at runtime using one of these two approaches:
 
 ### 1) System Property Override
-
-By default, `config.properties` contains a `platform` entry set to `Android`. To override this at runtime, pass a `-Dplatform` system property when executing Maven or TestNG. For example:
+Before test execution put the apk file in the *src/test/resources/app/CodeChallenge.apk*. By default, `config.properties` contains a `platform` entry set to `Android`. To override this at runtime, pass a `-Dplatform` system property when executing Maven or TestNG. For example:
 
 ```bash
 # Run tests on Android (default, no -D required):
