@@ -6,11 +6,13 @@ import org.infrastructure.DriverManager;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.pages.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.testng.ITestContext;
-import org.testng.ITestResult;
 import org.testng.annotations.*;
 import org.utils.ConfigReader;
 
+import java.lang.reflect.Method;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,16 +27,20 @@ public class BaseTest {
     protected MyBagPage myBagPage;
 
     String platform = ConfigReader.getPlatform();
+    private static final Logger log = LoggerFactory.getLogger(BaseTest.class);
 
     @BeforeSuite(alwaysRun = true)
     public void startAppiumServer() {
+        log.info("Start Appium server");
         DriverManager.startAppiumServer();
     }
 
     @BeforeClass(alwaysRun = true)
-    public void initPageObjects() {
+    public void initPageObjects(ITestContext context) {
+        log.info("Creating Appium driver for platform: {}", platform);
         driver = DriverManager.getDriver(platform);
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        context.setAttribute("driver", driver);
 
         loginPage = PageObjectFactory.getLoginPage(driver);
         homePage = PageObjectFactory.getHomePage(driver);
@@ -42,6 +48,11 @@ public class BaseTest {
         profilePage = PageObjectFactory.getProfilePage(driver);
         calendarPage = PageObjectFactory.getCalendarPage(driver);
         myBagPage = PageObjectFactory.getMyBagPage(driver);
+
+        String username = ConfigReader.getProperty("username");
+        String password = ConfigReader.getProperty("password");
+        if (shouldLoginBeforeClass())
+            loginPage.login(username, password);
     }
 
     @BeforeMethod
@@ -54,6 +65,13 @@ public class BaseTest {
     @AfterClass(alwaysRun = true)
     public void tearDown() {
         DriverManager.quitDriver();
+        log.info("Test Suite Ended");
+    }
+
+    @AfterSuite(alwaysRun = true)
+    public void stopAppiumServer() {
         DriverManager.stopAppiumServer();
     }
+
+    protected boolean shouldLoginBeforeClass() { return true; }
 }

@@ -4,11 +4,8 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.pages.base.BasePage;
 import org.testng.Assert;
-
-import java.time.Duration;
 
 public class LoginPage extends BasePage {
     @AndroidFindBy(id = "dk.TrackMan.Range:id/signInButton")

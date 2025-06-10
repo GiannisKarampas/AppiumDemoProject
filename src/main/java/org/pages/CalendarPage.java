@@ -6,7 +6,6 @@ import io.appium.java_client.pagefactory.AndroidFindBy;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.pages.base.BasePage;
-import org.testng.Assert;
 
 import java.util.List;
 import java.util.Random;

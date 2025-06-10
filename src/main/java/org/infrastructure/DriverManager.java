@@ -5,9 +5,6 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import io.appium.java_client.service.local.flags.GeneralServerFlag;
 
-import java.net.MalformedURLException;
-import java.net.URISyntaxException;
-
 public class DriverManager {
     private static AppiumDriver driver;
     private static AppiumDriverLocalService service;

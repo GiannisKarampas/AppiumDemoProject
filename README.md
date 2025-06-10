@@ -21,16 +21,20 @@ TrackmanKarampatzakis/
 │   │   ├── tests/
 │   │   └── resources/
 ├── pom.xml
+├── logback.xml
+├── testng.xml
 └── README.md
 ```
 
 ## Prerequisites
 
-- **Java 11+** installed
-- **Maven** installed and configured
+- **Java 21** installed
+- **Maven 3.9.9** installed and configured
 - **Android SDK** installed (for emulators or physical devices)
 - **Appium server** installed and running
 - **Emulator**: Android (15.0)
+- **Allure Report**: 
+  - brew install allure (Mac) or scoop install allure (Windows)
 
 ## Dynamic Platform Configuration
 
@@ -93,7 +97,20 @@ password=TestAccount123
 playerName=GiannisKaras
 ```
 
-## Extending the Code for Both Platforms
-* DriverFactory checks the resolved platform (Android or iOS) and builds the correct DesiredCapabilities.
-* DriverManager calls DriverFactory.createDriver(platform).
-* Page Objects remain the same if element locators are identical; otherwise, you can subclass or add conditional logic in the page classes.
+## Allure Reporting
+
+## Configuration (config.properties)
+```
+allure.results.directory=target/allure-results
+allure.report.directory=allure-report
+```
+
+## Generate Allure report
+```bash
+allure generate target/allure-results -o allure-report --clean
+```
+
+## Open Allure report
+```bash
+allure open allure-report
+```

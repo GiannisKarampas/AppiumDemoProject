@@ -1,6 +1,7 @@
 package tests;
 
 import base.BaseTest;
+import io.qameta.allure.Description;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import org.utils.*;
@@ -16,17 +17,13 @@ public class ProfileUpdatesTests extends BaseTest {
 
     @BeforeClass(alwaysRun = true)
     public void loadUserAndLogin() throws IOException {
-        String username = ConfigReader.getProperty("username");
-        String password = ConfigReader.getProperty("password");
-        loginPage.login(username, password);
-
-
         expected = ProfileDataGenerator.generateRandomProfile();
         String JSON_PATH = "src/test/resources/generated_profile.json";
         JsonWriter.writeToJson(expected, JSON_PATH);
     }
 
     @Test
+    @Description("Update profile data")
     public void testUpdateProfileFields() {
         profilePage.navigateToProfilePage();
         profilePage.assertThatAvatarProfileComponentIsDisplayed();
@@ -41,7 +38,6 @@ public class ProfileUpdatesTests extends BaseTest {
         profilePage.clickOnProfile();
 
         Profile updateData = profilePage.getProfileData();
-        System.out.println("Updated data: " + updateData.toString());
 
         profilePage.assertDataUpdated(updateData);
     }

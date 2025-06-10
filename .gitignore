@@ -37,4 +37,7 @@ build/
 ### Mac OS ###
 .DS_Store
 .idea
-src/test/resources/CodeChallenge.apk
+src/test/resources/app/*
+test-results/
+.allure/
+/allure-report/
