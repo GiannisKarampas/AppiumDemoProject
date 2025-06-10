@@ -94,7 +94,6 @@ appiumServerURL=http://localhost:4723/wd/hub
 # Credentials
 username=g.karampas91@gmail.com
 password=TestAccount123
-playerName=GiannisKaras
 ```
 
 ## Allure Reporting
